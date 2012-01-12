@@ -9,7 +9,7 @@ body {
 
 
 h1 {
-    color: #C51;
+    color: #C11;
     font-family: 'Acme', serif;
     font-size: 1000%;
     font-style: italic;
@@ -40,13 +40,39 @@ a {
 }
 
 
-ul{
-    margin-bottom: 3px;
+ul {
+    padding: 0;
+    margin-left: 9999px;
+    text-align: left;
+    font-size: 116%; 
 }
+
+
+ul.current {
+    margin: 0;    
+}
+
 
 li {
     list-style-type: none; 
-    margin-bottom: 0.85em;
+    padding: 1em;
+    border-bottom: 1px solid grey;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#FDFDFD), to(#eee));
+    background-image: -webkit-linear-gradient(#FDFDFD, #eee);
+    background-image: -moz-linear-gradient(#FDFDFD, #eee);
+    background-image: -o-linear-gradient(#FDFDFD, #eee);
+    background-image: -ms-linear-gradient(#FDFDFD, #eee);
+    background-image: linear-gradient(#FDFDFD, #eee);
+    border-color: #D6D6D6;
+}
+
+li:hover, li:active {
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#EDEDED), to(#DADADA));
+    background-image: -webkit-linear-gradient(#EDEDED, #DADADA);
+    background-image: -moz-linear-gradient(#EDEDED, #DADADA);
+    background-image: -o-linear-gradient(#EDEDED, #DADADA);
+    background-image: -ms-linear-gradient(#EDEDED, #DADADA);
+    background-image: linear-gradient(#EDEDED, #DADADA);
 }
 
 
@@ -73,24 +99,30 @@ li {
     margin-left: 1px;
 }
 
-#linklist {
-    text-align: left;
-    font-size: 110%;   
-}
-
 
 /*===============
    MEDIA QUERIES
   ===============*/
 
 @media only screen and (max-width: 666px) {
+    body {
+	margin : 0;
+	background-color: #E0E0E0;
+    }
+
     #container {
 	width: 100%;
+	box-shadow: none;
+	border: none;
+	background-color: inherit;
     }
     h1 {
 	font-size: 600%;
     }
     #searchbox {
 	font-size: 1.5em;
+    }
+    #spinner {
+	margin: 5px;
     }
 }
