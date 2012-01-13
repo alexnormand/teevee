@@ -11,9 +11,8 @@ use Goutte\Client;
 class Parser {
 
   private $result;
-  private $baseUrl              = 'http://www.google.com/search?hl=en&q=allintitle%3A&q=site%3Aepguides.com&q=';
-  private $epguidesBaseUrl      = 'http://epguides.com/';
-  private $directDownloadLinkId = '#copy_paste_links';
+  private $baseUrl         = 'http://www.google.com/search?hl=en&q=allintitle%3A&q=site%3Aepguides.com&q=';
+  private $epguidesBaseUrl = 'http://epguides.com/';
  
 
   /**
@@ -76,10 +75,6 @@ class Parser {
    private function getTVShowInfo($crawler) {     
      return  $crawler->filter('pre a[title]')->each(function($node, $i) {
 	 return array($node->getAttribute('title') => $node->textContent);
-       });
-
-     
-
-     
+       });         
    }
 }
