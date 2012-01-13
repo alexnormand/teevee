@@ -1,20 +1,13 @@
 <?php
-namespace Epguides;
-
-require_once 'goutte.phar';
-use Goutte\Client;
-
 /**
- * Epguides Parser
- *
+ * TV Show Parser
  */
 class Parser {
 
-  private $result;
-  private $baseUrl         = 'http://www.google.com/search?hl=en&q=allintitle%3A&q=site%3Aepguides.com&q=';
-  private $epguidesBaseUrl = 'http://epguides.com/';
+  private $result;            
+  private $searchShow  = 'http://services.tvrage.com/feeds/search.php?show=';
+  private $getEpisodes = 'http://services.tvrage.com/feeds/episode_list.php?sid=';
  
-
   /**
    * Constructor.
    *
@@ -24,19 +17,11 @@ class Parser {
                     false the Parser will search for all TV Show matching the 
                     query.
    */
-  public function __construct($query, $isTVShow=false) {
-
-    $client = new Client();
-
-    if($isTVShow) {    
-      $crawler      = $client->request('GET',
-				       $this->epguidesBaseUrl . $query . '/');
-      $this->result = $this->getTVShowInfo($crawler);          
-      
-    } else {
-      $crawler      = $client->request('GET',  $this->baseUrl . $query);
-      $this->result = $this->getTVShowList($crawler);          
-    }
+  public function __construct($query, $isTVShow=false) {   
+    if($isTVShow) 
+      $this->result = $this->getTVShowInfo($query);              
+    else 
+      $this->result = $this->getTVShowList($query);              
   }
 
    /**
@@ -51,17 +36,17 @@ class Parser {
    /**
     * Extract the list of TV Shows from the search results page.
     *
-    * @param \Crawler a \Crawler object from which to extract download links.
+    * @param $query - the show we're searching for.
     * @return array an array containing the download links.
     */
-   private function getTVShowList($crawler) {                          
-     return $crawler->filter('cite')->each(function($node, $i) {
-	 if(preg_match('/epguides.com/', $node->textContent))
-	   return substr(
-		      preg_replace('#epguides.com/#', ' ', $node->textContent),
-		      0,
-		      -1);
-       });
+   private function getTVShowList($query) {                          
+     $shows  = new SimpleXMLElement($this->searchShow . $query, NULL, TRUE);
+     $result = array();
+
+     foreach($shows->show as $show) 
+       $result[(int) $show->showid] = (string) $show->name;       
+          
+     return $result;
    }
 
 
@@ -69,12 +54,28 @@ class Parser {
     * Extract a TV show's info (seasons, episodes,...) from the search results 
     * page.
     *
-    * @param \Crawler a \Crawler object from which to a TV show's info.
+    * @param int $showID the TVRage showid
     * @return array an array containing the TV Show's info
     */
-   private function getTVShowInfo($crawler) {     
-     return  $crawler->filter('pre a[title]')->each(function($node, $i) {
-	 return array($node->getAttribute('title') => $node->textContent);
-       });         
+   private function getTVShowInfo($showID) {     
+     $result = array();
+     $doc = new DOMDocument();
+     $doc->load($this->getEpisodes . $showID);
+               
+     foreach($doc->getElementsByTagName('Season') as $season) {
+       $seasonEpisodeList = array();
+
+       foreach($season->getElementsByTagName('episode') as $episode) {	 
+	 $epnum   = $episode->getElementsByTagName('epnum')->item(0)->textContent;
+	 $title   = $episode->getElementsByTagName('title')->item(0)->textContent;
+	 $airdate = $episode->getElementsByTagName('airdate')->item(0)->textContent;	 		
+
+	 $seasonepisodelist[$epnum] = array($title, $airdate);
+       }
+
+       $result[$season->getAttribute('no')] = $seasonepisodelist;
+     }
+
+     return $result;
    }
 }
