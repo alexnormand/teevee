@@ -11,14 +11,10 @@ class Parser {
   /**
    * Constructor.
    *
-   * @param string  the query string.
-   * @param boolean Are we extracting info of a specific TV Show, if true the 
-                    Parser will extract all of the info about a TV Show, if 
-                    false the Parser will search for all TV Show matching the 
-                    query.
+   * @param string|int  the query string|the id of a tv show.
    */
-  public function __construct($query, $isTVShow=false) {   
-    if($isTVShow) 
+  public function __construct($query) {   
+    if(is_int($query))
       $this->result = $this->getTVShowInfo($query);              
     else 
       $this->result = $this->getTVShowList($query);              

@@ -1,18 +1,27 @@
 <?php
 
-require_once 'parser.php';
+require_once __DIR__ . '/silex.phar';
+require_once __DIR__ . '/parser.php';
+use Symfony\Component\HttpFoundation\Response;
 
-header("Content-type: text/plain");
-header("Cache-Control: no-cache, must-revalidate"); 
-header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); 
+$getJSON =  function ($query) {
+  return new Response
+  (
+   new Parser($query),			
+   200,
+   array('Content-Type' => 'application/json')
+   );    
+};
 
-if(isset($_GET['q'])) {
-   $query = urlencode(htmlspecialchars($_GET['q']));  
-   echo new Parser($query);
-}
-else if (isset($_GET['showid'])) {
-  $query = urlencode(htmlspecialchars($_GET['showid']));  
-  echo new Parser($query, true);
-}
- 		    
 
+$app = new Silex\Application();
+
+$app->get('/search/{query}', function ($query) use ($getJSON) {
+    return $getJSON(urlencode(htmlspecialchars($query)));
+  });
+$app->get('/show/{showid}', function($showid) use ($getJSON) {
+    return $getJSON((int) $showid);
+  })
+->assert('showid', '\d+');
+
+$app->run();
