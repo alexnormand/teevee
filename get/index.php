@@ -16,8 +16,8 @@ $getJSON =  function ($query) {
 
 $app = new Silex\Application();
 
-$app->get('/search/{query}', function ($query) use ($getJSON) {
-    return $getJSON(urlencode(htmlspecialchars($query)));
+$app->get('/search/{query}', function ($query, \Silex\Application $app) use ($getJSON) {
+    return $getJSON(urlencode($app->escape($query)));
   });
 $app->get('/show/{showid}', function($showid) use ($getJSON) {
     return $getJSON((int) $showid);
