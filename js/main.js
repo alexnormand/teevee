@@ -1,11 +1,61 @@
+require.config({
+    paths: {
+	text: 'lib/require/text',
+	order: 'lib/require/order',
+	zepto: 'lib/zepto-0.8',
+	underscore: 'lib/underscore-1.2.4',
+	backbone: 'lib/backbone-0.5.3'
+    }
+});
+
+
+require(['require', 'zepto', 'underscore', 'backbone'], 
+	function(require, $, _, Backbone) {
+	    require(['app'], function(require) {});
+	});
+
+/*
+
 $(function() {
 
     var templates = {
-	root   : '<form id="target"><input id="searchbox" type="search" placeholder="Search" name="q" required=""><div id="spinner"></div></form>',
+	root    :  '<form id="target"><input id="searchbox" type="search" placeholder="Search" name="q" required=""><div id="spinner"></div></form>',
 	shows   : '<ul class="current"> {{#items}}<li>{{.}}</li>{{/items}} </ul>',
 	seasons : '<ul class="current"> {{#items}}<li>{{.}}</li>{{/items}} </ul>',
         episodes: '<ul> {{#items}}<li>{{.}}</li>{{/items}} </ul>'
     };
+
+
+    var searchView = Backbone.View.extend({
+	el: $('#target'),
+	render: function() {
+	    this.el.html('<form id="target">' + 
+                            '<input id="searchbox" ' + 
+                                   'type="search" ' + 
+                                   'placeholder="Search" ' + 
+                                   'name="q" ' + 
+                                   'required />' + 
+                              '<div id="spinner">' + 
+                            '</div>' + 
+                           '</form>');
+	    return this;
+	},
+
+	events: {
+	    "submit": "search", 
+	},
+	
+	search: function(event) {
+	    var query = $('#searchbox').val();
+	    e.preventDefault();
+	    that.searchTVShows(query);
+	    that.navigate('/search/' + encodeURIComponent(query)); 
+	}
+	
+	
+    });
+
+
 
     var Router = Backbone.Router.extend({
 	routes: {
@@ -50,7 +100,7 @@ $(function() {
 
 	    var t = '&_=' + new Date().getSeconds();	
 
-	    $.getJSON('get/?show=' + this.textContent, function(response) {
+	    $.getJSON('get/?showid=' + this.textContent, function(response) {
 						
 		var list = document.createElement('ul');
 		list.id = 'seasonslist';
@@ -80,3 +130,4 @@ $(function() {
        eprouter.navigate('/', true);
 });
    
+*/
