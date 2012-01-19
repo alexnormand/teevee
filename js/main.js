@@ -11,6 +11,10 @@ require.config({
 
 require(['require', 'order!zepto', 'order!underscore', 'order!backbone'], 
 	function(require, $, _, Backbone) {
-	    require(['app'], function(require) {});
+	    require(['app'], function(require) {
+		window.addEventListener('load', function(e) {
+		    setTimeout(function() { window.scrollTo(0, 1); }, 1);
+		}, false);
+	    });
 	});
 
