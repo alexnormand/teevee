@@ -1,5 +1,5 @@
 <ul class="current"> 
-<% _.each(list, function(value, key, list) { %>
-   <li id="i<%= key %>"><%= value %></li>
+<% _.each(list, function(element) { %>
+   <li id="i<%= element.id %>"><%= element.title %></li>
 <%}); %>
 </ul>
