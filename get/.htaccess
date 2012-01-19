@@ -2,7 +2,7 @@
     #Options -MultiViews
 
     RewriteEngine On
-    RewriteBase /~alex/github/epguides-scraper/get
+    RewriteBase /get
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
