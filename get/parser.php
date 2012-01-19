@@ -40,8 +40,8 @@ class Parser {
      $result = array();
 
      foreach($shows->show as $show) 
-       $result[(int) $show->showid] = (string) $show->name;       
-          
+       $result[] = array('id'   => (int) $show->showid,
+			 'title' => (string) $show->name);                 
      return $result;
    }
 
@@ -59,19 +59,17 @@ class Parser {
      $doc->load($this->getEpisodes . $showID);
                
      foreach($doc->getElementsByTagName('Season') as $season) {
-       $seasonEpisodeList = array();
-
        foreach($season->getElementsByTagName('episode') as $episode) {	 
 	 $epnum   = $episode->getElementsByTagName('epnum')->item(0)->textContent;
 	 $title   = $episode->getElementsByTagName('title')->item(0)->textContent;
 	 $airdate = $episode->getElementsByTagName('airdate')->item(0)->textContent;	 		
 
-	 $seasonepisodelist[$epnum] = array($title, $airdate);
+	 $result[] = array('id'        => (int) $epnum, 
+			   'seasonnum' => (int) $season->getAttribute('no'),
+			   'title'     => $title, 
+			   'airdate'   => $airdate);
        }
-
-       $result[$season->getAttribute('no')] = $seasonepisodelist;
      }
-
      return $result;
    }
 }
