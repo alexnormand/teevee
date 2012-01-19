@@ -44,7 +44,7 @@ define(
 	});
 		
 	var router = new TeeveeRouter;	
-	Backbone.history.start({root: "/~alex/github/epguides-scraper/"});
+	Backbone.history.start({root: '/~alex/github/teevee'});
 
 	if(!window.location.hash)
 	    router.navigate('/', true);
