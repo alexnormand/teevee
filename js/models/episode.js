@@ -1,15 +1,4 @@
-define([
-    'zepto',
-    'underscore',
-    'backbone',
-], function($, _, Backbone) {
-    var Episode = Backbone.Model.extend({
-	defaults: {
-	    title  : 'episode title',
-	    num    : 'episode number',
-	    airdate: 'episode airdate'
-	},
-
-    });
-    
+define(['backbone'], function(Backbone) { 
+    var Episode = Backbone.Model.extend({});    
+    return Episode;
 });
