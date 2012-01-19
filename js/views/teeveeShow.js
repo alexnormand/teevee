@@ -1,33 +1,28 @@
 define([
     'zepto',
     'underscore',
-    'backbone',
+    'views/baseView',
     'text!templates/list.html'    
-], function($, _, Backbone, searchBoxTemplate) {
+], function($, _, BaseView, episodeListTemplate ) {
  
-    var TeeveeShowView = Backbone.View.extend({
-	el: $('#main'),	
+    var TeeveeShowView = BaseView.extend({
+	el : $('#main'),
+	template : episodeListTemplate,
 
-	events: {
+	events : {
 	    'click .current li ' : "displayShow"
 	},
 
-	initialize: function() {
-	    this.render();
-	},
-
-	displayShow: function(event) {
+	displayShow : function(event) {
 	    var query = $('searchbox').val();
 	    e.preventDefault();	    	    
-
 	},
 
-	render: function(event) {
-	    this.el.html('<h1>hurray!</h1>');
+	render : function(event) {
+	    this.el.html(_.template(this.template, {list : this.collection.toJSON()}));			    	    	    	    
 	    return this;
 	}		
     });
     
     return TeeveeShowView;
-
 });

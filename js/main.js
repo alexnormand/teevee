@@ -9,7 +9,7 @@ require.config({
 });
 
 
-require(['require', 'zepto', 'underscore', 'backbone'], 
+require(['require', 'order!zepto', 'order!underscore', 'order!backbone'], 
 	function(require, $, _, Backbone) {
 	    require(['app'], function(require) {});
 	});
