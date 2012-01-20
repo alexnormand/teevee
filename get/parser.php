@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/goutte.phar';
+use Goutte\Client;
+
 /**
  * TV Show Parser
  */
@@ -7,6 +10,14 @@ class Parser {
   private $result;            
   private $searchShow  = 'http://services.tvrage.com/feeds/search.php?show=';
   private $getEpisodes = 'http://services.tvrage.com/feeds/episode_list.php?sid=';
+  private $headers     = array (
+				'Cache-Control' =>  'max-age=0',
+				'User-Agent' => ' Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2',
+				'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+				'Accept-Encoding' => 'gzip,deflate,sdch',
+				'Accept-Language: en-US,en;q=0.8,fr;q=0.6',
+				'Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3'
+				);
  
   /**
    * Constructor.
@@ -35,7 +46,21 @@ class Parser {
     * @param $query - the show we're searching for.
     * @return array an array containing the download links.
     */
-   private function getTVShowList($query) {                          
+   private function getTVShowList($query) { 
+
+     $client = new Client();
+     $crawler = $client->request('GET', 
+				 $this->searchShow . $query, 
+				 array(), 
+				 array(),
+				 $this->headers);
+
+     return $crawler->filter('show')->each(function($show) {
+	 return array('id'    => (int) $show->getElementsByTagName('showid')->item(0)->textContent,
+		      'title' => $show->getElementsByTagName('name')->item(0)->textContent);
+       });
+
+                         
      $shows  = new SimpleXMLElement($this->searchShow . $query, NULL, TRUE);
      $result = array();
 
