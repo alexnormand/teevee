@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project name="Teevee" default="prod" basedir="/home/alex/public_html/github/teevee">
+<project name="Teevee" default="prod" basedir=".">
 
     <description>Client-side ANT build file for Teevee</description>
 
     <target name="-load.properties"
         description="Set properties for this build">
         <!--YUI Compressor location-->
-        <property name="yui.dir" value="${basedir}/../../../tools/yuicompressor-2.4.7.jar"/>
+        <property name="yui.dir" value="${user.home}/tools/yuicompressor-2.4.7.jar"/>
         <!--Source JS dir-->
         <property name="src.js.dir" value="${basedir}/js"/>
         <!--Source CSS dir-->
@@ -14,7 +14,7 @@
 	<!-- Server side source code-->
         <property name="src.serverside.dir" value="${basedir}/get"/>
         <!--r.js optimization dir-->
-        <property name="r.node" value="${basedir}/../../../tools/r.js"/>
+        <property name="r.node" value="${user.home}/tools/r.js"/>
 	<property name="app.build.js" value="${basedir}/js/app-build.js" />
         <!--Output dir-->
         <property name="build.dir" value="build"/>
@@ -49,14 +49,14 @@
     </target>
 
     <!-- Copy index.html -->
-    <target name="-index.html"
+    <target name="-copy.index.html"
 	    description="Copie index.html to build">
       <copy file="${basedir}/index.html" tofile="${build.dir}/index.html" />
       <echo>Copied index.html</echo>
     </target>
 	
     <!-- Server side code -->
-    <target name="-serverside"
+    <target name="-copy.serverside"
 	    description="Copies serverside code to build dir">
       <copy todir="${build.dir}/get">
 	  <fileset dir="${src.serverside.dir}" excludes="." />
@@ -99,8 +99,8 @@
         depends="
             -load.properties, 
             -init, 
-	    -index.html,
-	    -serverside,
+	    -copy.index.html,
+	    -copy.serverside,
             -js.concatenate,
             -css.minify">
     </target>
