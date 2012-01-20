@@ -12,13 +12,15 @@ class Parser {
   private $getEpisodes = 'http://services.tvrage.com/feeds/episode_list.php?sid=';
   private $headers     = array (
 				'Cache-Control' =>  'max-age=0',
-				'User-Agent' => ' Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2',
+				'Host' => 'services.tvrage.com',
+				'Connection' => 'keep-alive',
+				'User-Agent' => ' Mozilla/5.0 (X11; Linux i686)',
 				'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 				'Accept-Encoding' => 'gzip,deflate,sdch',
 				'Accept-Language: en-US,en;q=0.8,fr;q=0.6',
 				'Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3'
 				);
- 
+
   /**
    * Constructor.
    *
@@ -47,8 +49,7 @@ class Parser {
     * @return array an array containing the download links.
     */
    private function getTVShowList($query) { 
-
-     $client = new Client();
+     $client  = new Client();
      $crawler = $client->request('GET', 
 				 $this->searchShow . $query, 
 				 array(), 
@@ -59,15 +60,6 @@ class Parser {
 	 return array('id'    => (int) $show->getElementsByTagName('showid')->item(0)->textContent,
 		      'title' => $show->getElementsByTagName('name')->item(0)->textContent);
        });
-
-                         
-     $shows  = new SimpleXMLElement($this->searchShow . $query, NULL, TRUE);
-     $result = array();
-
-     foreach($shows->show as $show) 
-       $result[] = array('id'   => (int) $show->showid,
-			 'title' => (string) $show->name);                 
-     return $result;
    }
 
 
@@ -78,23 +70,24 @@ class Parser {
     * @param int $showID the TVRage showid
     * @return array an array containing the TV Show's info
     */
-   private function getTVShowInfo($showID) {     
-     $result = array();
-     $doc = new DOMDocument();
-     $doc->load($this->getEpisodes . $showID);
-               
-     foreach($doc->getElementsByTagName('Season') as $season) {
-       foreach($season->getElementsByTagName('episode') as $episode) {	 
+   private function getTVShowInfo($showID) {      
+     $client  = new Client();
+     $crawler = $client->request('GET',
+				 $this->getEpisodes . $showID,
+				 array(),
+				 array(),
+				 $this->headers);
+     
+     return $crawler->filter('episode')->each(function($episode, $i) {	 	 
 	 $epnum   = $episode->getElementsByTagName('epnum')->item(0)->textContent;
+	 $season  = $episode->parentNode->getAttribute('no');
 	 $title   = $episode->getElementsByTagName('title')->item(0)->textContent;
 	 $airdate = $episode->getElementsByTagName('airdate')->item(0)->textContent;	 		
-
-	 $result[] = array('id'        => (int) $epnum, 
-			   'seasonnum' => (int) $season->getAttribute('no'),
-			   'title'     => $title, 
-			   'airdate'   => $airdate);
-       }
-     }
-     return $result;
-   }
+	 
+	   return array('id'        => (int) $epnum,
+			'seasonnum' => (int) $season,
+			'title'     => $title, 
+			'airdate'   => $airdate);	     	 	 
+     });           
+   }        
 }
