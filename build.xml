@@ -76,9 +76,7 @@
                                 name=main 
                                 out=../${build.dir}/js/main.js" />
 	</exec>
-	<copy todir="${build.dir}/js/lib/require" >
-	  <fileset dir="${src.js.dir}/lib/require/" />
-	</copy>
+	<copy file="${src.js.dir}/lib/require/require-1.0.4.js" todir="${build.dir}/js/lib/require"/>
 	<echo>Finish JS concatenation and minification</echo>
     </target>
 
