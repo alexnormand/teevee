@@ -10,17 +10,19 @@ define([
 	template : showListTemplate,
 
 	events : {
-	    'click .current li' : "displayShow"
+	    'click .shows li' : "displaySeasons"
 	},
 
-	displayShow : function(event) {
+	displaySeasons : function(event) {
 	    event.preventDefault();
-	    this.options.router.navigate('/show/' + event.target.parentNode.id.slice(1), true);
+	    this.options.router.navigate('/show/' + event.target.id.slice(1) + '/seasons', true);
 	    this.el.html(this.spinner);
 	},
 
 	render : function() {
-	    this.el.html(_.template(this.template, {list : this.collection.toJSON()}));			    	    	    
+	    this.el.html(_.template(
+		this.template, 
+		{list : this.collection.toJSON(), cssClass: 'shows'}));			    	    	    
 	    return this;
 	}		
     });

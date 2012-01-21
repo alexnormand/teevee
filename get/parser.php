@@ -20,7 +20,7 @@ class Parser {
     if(is_int($query))
       $this->result = $this->getSeasons($query);              
     else if(is_array($query))
-      $this->result  = $this->getEpisodes($query);
+      $this->result = $this->getEpisodes($query['showid'], $query['season']);
     else
       $this->result = $this->getTVShowList($query);              
   }
@@ -49,27 +49,32 @@ class Parser {
 
    /**
     * Return the list of seasons of a tv show.
-    * @param int $showID the id fo the show    
+    * @param int $showid the id fo the show    
     * @return array the list of seasons
     */
-   private function getSeasons($showID) {          
-     return array_keys($this->trakt->showSeasons($showID));
+   private function getSeasons($showid) {          
+     return array('seasons' => array_keys($this->trakt->showSeasons($showid)));
    }
 
    /**
     * Return the eposide of a given season for a tv show
     *
-    * @param array $query an array (array('showid' => IDOFASHOW, 'season' => SEASONNUMBER)
+    * @param $showid 
+    * @param $season 
     * @return array an array containing the list of episodes.
     */
-   private function getEpisodes($query) {      
+   private function getEpisodes($showid, $season) {      
    
-     return array_map(function($e) {
-	return  array('id'      => $e['episode'],
-		      'season'  => $e['season'],
-		      'title'   => $e['title'],
-		      'airdate' => $e['first_aired']);
+     return array_map(function($e) use($showid) {	 
+	 return  array('id'       => $e['episode'],		       
+		       'showid'   => $showid,
+		       'season'   => $e['season'],
+		       'title'    => $e['title'],
+		       'airdate'  => date('r',$e['first_aired']),
+		       'overview' => $e['overview'],
+		       'image'    => $e['images']['screen']) ?: '';
 
-     }, $this->trakt->showSeason($query['showid'], $query['season']));   
-   }        
+     }, $this->trakt->showSeason($showid, $season));   
+   } 
+       
 }

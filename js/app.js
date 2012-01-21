@@ -1,18 +1,23 @@
 define(
     ['backbone', 
      'views/teeveeRoot',
-     'views/teeveeSearch', 
-     'views/teeveeShow', 
+     'views/teeveeSearch',
+     'views/teeveeSeasons',
+     'views/teeveeSeason', 
      'collections/shows',
-     'collections/episodes'],
-    function( Backbone,  TeeveeRootView, TeeveeSearchView, TeeveeShowView, Shows, Episodes) {
+     'collections/season',
+     'models/show'],
+    function(Backbone, TeeveeRootView, TeeveeSearchView, TeeveeSeasonsView, TeeveeSeasonView, Shows, Season, Show) {
     
+	var shows = new Shows;
+
 	var TeeveeRouter = Backbone.Router.extend({
 
 	    routes : {	
-		'/' : "root",
-		'/search/:query' : "search",
-		'/show/:showid' : "show"
+		'/'                            : 'root',
+		'/search/:query'               : 'search',
+		'/show/:showid/seasons'        : 'seasons',
+		'/show/:showid/season/:season' : 'season',	
 	    },
 	    
 	    root : function() {
@@ -20,27 +25,39 @@ define(
 		view.render();
 	    },	
 	
-	    search : function(query) {
-		var shows = new Shows(null, query),
+	    search : function(query) {		
+		var shows = new Shows,
 		    view  = new TeeveeSearchView({router: this, collection: shows});
 		
 		view.showSpinner();
-
+		shows.setUrl(query);
 		shows.fetch({success: function() {
 		    view.render();
 		}});		
-	    },	
+
 	
-	    show : function(showid) {
-		var episodes = new Episodes(null, showid),
-		    view = new TeeveeShowView({router : this, collection: episodes});
+	    },	
+
+	    seasons: function(showid) {	
+		var show = new Show({id: showid}),
+    		    view = new TeeveeSeasonsView({router: this, model: show});		
+			
+		view.showSpinner();
+		show.setUrl(showid);
+		show.fetch({success: function(show) {		    
+		    view.render();
+		}});								
+	    },
+	
+	    season : function(showid, season) {
+		var season = new Season(null, {showid: showid, season: season}),
+		      view = new TeeveeSeasonView({router : this, collection: season});
 		
 		view.showSpinner();
-
-		episodes.fetch({success: function() {
+		season.fetch({success: function() {
 		    view.render();
 		}});
-	    }	
+	    },
 	});
 		
 	var router = new TeeveeRouter;	

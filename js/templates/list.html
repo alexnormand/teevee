@@ -1,5 +1,5 @@
-<ul class="current"> 
-<% _.each(list, function(element) { %>
-   <li id="i<%= element.id %>"><div><%= element.title %></div></li>
+<ul class="<%= cssClass %> current"> 
+<% _.each(list, function(element, index) { %>
+   <li id="i<%= element.id %>"><% print(index + 1) %>. <%= element.title %></li>
 <%}); %>
 </ul>

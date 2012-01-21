@@ -25,9 +25,10 @@ $app->get('/seasons/{showid}', function($showid) use ($getJSON) {
 })
 ->assert('showid', '\d+');
   
-$app->get('/season/{showid}/{season}', function($showid, $season) use ($getJSON) {
+$app->get('/show/{showid}/season/{season}', function($showid, $season) use ($getJSON) {
     return $getJSON(array('showid' => (int) $showid, 'season' => (int) $season));
 })
-->assert('showid', '\d+');
+->assert('showid', '\d+')
+->assert('season', '\d+');
 
 $app->run();
