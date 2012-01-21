@@ -1,6 +1,5 @@
 <?php
-require_once __DIR__ . '/goutte.phar';
-use Goutte\Client;
+require_once __DIR__ . '/trakt.php';
 
 /**
  * TV Show Parser
@@ -8,28 +7,21 @@ use Goutte\Client;
 class Parser {
 
   private $result;            
-  private $searchShow  = 'http://services.tvrage.com/feeds/search.php?show=';
-  private $getEpisodes = 'http://services.tvrage.com/feeds/episode_list.php?sid=';
-  private $headers     = array (
-				'Cache-Control' =>  'max-age=0',
-				'Host' => 'services.tvrage.com',
-				'Connection' => 'keep-alive',
-				'User-Agent' => ' Mozilla/5.0 (X11; Linux i686)',
-				'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-				'Accept-Encoding' => 'gzip,deflate,sdch',
-				'Accept-Language: en-US,en;q=0.8,fr;q=0.6',
-				'Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3'
-				);
+  private $trakt;
 
   /**
    * Constructor.
    *
    * @param string|int  the query string|the id of a tv show.
    */
-  public function __construct($query) {   
+  public function __construct($query) { 
+    $this->trakt = new Trakt('aeddefdbcdd7ca5a2b9855b940389ebe');
+
     if(is_int($query))
-      $this->result = $this->getTVShowInfo($query);              
-    else 
+      $this->result = $this->getSeasons($query);              
+    else if(is_array($query))
+      $this->result  = $this->getEpisodes($query);
+    else
       $this->result = $this->getTVShowList($query);              
   }
 
@@ -48,46 +40,36 @@ class Parser {
     * @param $query - the show we're searching for.
     * @return array an array containing the download links.
     */
-   private function getTVShowList($query) { 
-     $client  = new Client();
-     $crawler = $client->request('GET', 
-				 $this->searchShow . $query, 
-				 array(), 
-				 array(),
-				 $this->headers);
+   private function getTVShowList($query) {  
+     return array_map(function($s){
+	 return array('id' => $s['tvdb_id'], 'title' => $s['title']);
 
-     return $crawler->filter('show')->each(function($show) {
-	 return array('id'    => (int) $show->getElementsByTagName('showid')->item(0)->textContent,
-		      'title' => $show->getElementsByTagName('name')->item(0)->textContent);
-       });
+     }, $this->trakt->searchShows($query));
    }
 
+   /**
+    * Return the list of seasons of a tv show.
+    * @param int $showID the id fo the show    
+    * @return array the list of seasons
+    */
+   private function getSeasons($showID) {          
+     return array_keys($this->trakt->showSeasons($showID));
+   }
 
    /**
-    * Extract a TV show's info (seasons, episodes,...) from the search results 
-    * page.
+    * Return the eposide of a given season for a tv show
     *
-    * @param int $showID the TVRage showid
-    * @return array an array containing the TV Show's info
+    * @param array $query an array (array('showid' => IDOFASHOW, 'season' => SEASONNUMBER)
+    * @return array an array containing the list of episodes.
     */
-   private function getTVShowInfo($showID) {      
-     $client  = new Client();
-     $crawler = $client->request('GET',
-				 $this->getEpisodes . $showID,
-				 array(),
-				 array(),
-				 $this->headers);
-     
-     return $crawler->filter('episode')->each(function($episode, $i) {	 	 
-	 $epnum   = $episode->getElementsByTagName('epnum')->item(0)->textContent;
-	 $season  = $episode->parentNode->getAttribute('no');
-	 $title   = $episode->getElementsByTagName('title')->item(0)->textContent;
-	 $airdate = $episode->getElementsByTagName('airdate')->item(0)->textContent;	 		
-	 
-	   return array('id'        => (int) $epnum,
-			'seasonnum' => (int) $season,
-			'title'     => $title, 
-			'airdate'   => $airdate);	     	 	 
-     });           
+   private function getEpisodes($query) {      
+   
+     return array_map(function($e) {
+	return  array('id'      => $e['episode'],
+		      'season'  => $e['season'],
+		      'title'   => $e['title'],
+		      'airdate' => $e['first_aired']);
+
+     }, $this->trakt->showSeason($query['showid'], $query['season']));   
    }        
 }

@@ -19,8 +19,14 @@ $app->get('/search/{query}', function ($query) use ($getJSON, $app) {
     return $getJSON(urlencode($app->escape($query)));
 });
 
-$app->get('/show/{showid}', function($showid) use ($getJSON) {
+
+$app->get('/seasons/{showid}', function($showid) use ($getJSON) {
     return $getJSON((int) $showid);
+})
+->assert('showid', '\d+');
+  
+$app->get('/season/{showid}/{season}', function($showid, $season) use ($getJSON) {
+    return $getJSON(array('showid' => (int) $showid, 'season' => (int) $season));
 })
 ->assert('showid', '\d+');
 
