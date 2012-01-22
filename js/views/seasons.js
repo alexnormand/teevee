@@ -6,7 +6,6 @@ define([
 ], function($, _, BaseView, episodeListTemplate ) {
  
     var TeeveeSeasonsView = BaseView.extend({
-	el : $('#main'),
 	template : episodeListTemplate,
 
 	events : {

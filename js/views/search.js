@@ -6,7 +6,6 @@ define([
 ], function($, _, BaseView, showListTemplate) {
  
     var TeeveeSearchView = BaseView.extend({
-	el : $('#main'),
 	template : showListTemplate,
 
 	events : {

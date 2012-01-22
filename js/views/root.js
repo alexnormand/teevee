@@ -6,7 +6,6 @@ define([
 ], function($, _, BaseView, searchBoxTemplate) {
  
     var Teevee = BaseView.extend({	
-	el : $('#main'),
 	template : searchBoxTemplate,
 
 	events : {
