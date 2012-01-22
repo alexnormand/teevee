@@ -9,10 +9,10 @@ require.config({
 });
 
 
-require(['require', 'order!zepto', 'order!underscore', 'order!backbone', 'order!routers/teeveeRouter'], 
-	function(require, $, _, Backbone, TeeveeRouter) {
+require(['require', 'order!zepto', 'order!underscore', 'order!backbone', 'order!routers/router'], 
+	function(require, $, _, Backbone, Router) {
 		
-	    var router = new TeeveeRouter;	
+	    var router = new Router;	
 	    Backbone.history.start({root: '/~alex/github/teevee'});
 	    
 	    if(!window.location.hash)

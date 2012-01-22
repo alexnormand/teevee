@@ -1,15 +1,15 @@
 define(
     ['backbone', 
-     'views/teeveeRoot',
-     'views/teeveeSearch',
-     'views/teeveeSeasons',
-     'views/teeveeSeason', 
+     'views/root',
+     'views/search',
+     'views/seasons',
+     'views/season', 
      'collections/shows',
      'collections/season',
      'models/show'],
-    function(Backbone, TeeveeRootView, TeeveeSearchView, TeeveeSeasonsView, TeeveeSeasonView, Shows, Season, Show) {    
+    function(Backbone, RootView, SearchView, SeasonsView, SeasonView, Shows, Season, Show) {    
 
-	var TeeveeRouter = Backbone.Router.extend({
+	var Router = Backbone.Router.extend({
 	    routes : {	
 		'/'                            : 'root',
 		'/search/:query'               : 'search',
@@ -18,13 +18,13 @@ define(
 	    },
 	    
 	    root : function() {
-		var view = new TeeveeRootView({router: this});
+		var view = new RootView({router: this});
 		view.render();
 	    },	
 	
 	    search : function(query) {		
 		var shows = new Shows,
-		    view  = new TeeveeSearchView({router: this, collection: shows});
+		    view  = new SearchView({router: this, collection: shows});
 				
 		shows.setUrl(query);
 		shows.fetch();	
@@ -32,7 +32,7 @@ define(
 
 	    seasons: function(showid) {	
 		var show = new Show({id: showid}),
-    		    view = new TeeveeSeasonsView({router: this, model: show});		
+    		    view = new SeasonsView({router: this, model: show});		
 					
 		show.setUrl(showid);
 		show.fetch();							
@@ -40,11 +40,11 @@ define(
 	
 	    season : function(showid, season) {
 		var season = new Season(null, {showid: showid, season: season}),
-		      view = new TeeveeSeasonView({router : this, collection: season});
+		      view = new SeasonView({router : this, collection: season});
 		
 		season.fetch();
 	    },
 	});
 	
-	return TeeveeRouter;	
+	return Router;	
     });
