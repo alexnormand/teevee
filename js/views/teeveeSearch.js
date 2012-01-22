@@ -23,6 +23,8 @@ define([
 	    this.el.html(_.template(
 		this.template, 
 		{list : this.collection.toJSON(), cssClass: 'shows'}));			    	    	    
+
+	    this.slideIn();
 	    return this;
 	}		
     });

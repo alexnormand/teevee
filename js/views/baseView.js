@@ -13,6 +13,12 @@ define([
 
 	showSpinner : function() {
 	    this.el.html(this.spinner);
+	},
+
+	slideIn: function() {
+	    setTimeout(function() {
+		$('ul').addClass('current')
+	    }, 1);
 	}
 
     });

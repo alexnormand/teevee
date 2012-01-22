@@ -25,13 +25,16 @@ define([
 	  
 
 	    this.options.router.navigate(url);
-	    this.el.html(html);	    
+	    this.el.html(html);
+	    this.slideIn();
 	},
 
 	render : function(event) {
 	    this.el.html(_.template(
 		this.template, 
 		{list : this.collection.toJSON(), cssClass : 'episodes'}));			    	    	    	    
+
+	    this.slideIn();
 	    return this;
 	}		
     });

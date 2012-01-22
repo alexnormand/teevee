@@ -48,9 +48,13 @@ a {
 
 ul {
     padding: 0;
-    margin-left: 9999px;
+    margin-left: 666px;
     text-align: left;
     font-size: 116%; 
+    -webkit-transition: margin ease-in 0.3s;
+    -moz-transition: margin ease-in 0.3s;
+    -ms-transition: margin ease-in 0.3s;
+    -o-transition: margin ease-in 0.3s;
 }
 
 

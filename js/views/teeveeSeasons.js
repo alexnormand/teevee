@@ -27,6 +27,7 @@ define([
 
 	render : function(event) {
 	    this.el.html(_.template(this.template, {list : this.model.get('seasons')}));
+	    this.slideIn();
 	    return this;
 	}		
     });
