@@ -7,13 +7,17 @@ define([
 ], function($, _, BaseView, episodeListTemplate, episodeTemplate ) {
  
     var TeeveeSeasonView = BaseView.extend({
-	el : $('#main'),
 	template : episodeListTemplate,
 
 	events : {
 	    'click .episodes li ' : "displayEpisode"
 	},
 
+	initialize: function() {
+	    this.collection.bind('reset', this.render, this);
+	    this.showSpinner();
+	},
+	
 	displayEpisode : function(event) {	
 	    event.preventDefault();	    	    
 

@@ -7,9 +7,9 @@ define([
  
     var BaseView = Backbone.View.extend({
 
-	initialize : function() {
-	    this.spinner = '<div id="spinner"></div>';
-	},
+	el: $('#main'),
+
+	spinner : '<div id="spinner"></div>',
 
 	showSpinner : function() {
 	    this.el.html(this.spinner);

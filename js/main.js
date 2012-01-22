@@ -9,12 +9,13 @@ require.config({
 });
 
 
-require(['require', 'order!zepto', 'order!underscore', 'order!backbone'], 
-	function(require, $, _, Backbone) {
-	    require(['app'], function(require) {
-		window.addEventListener('load', function(e) {
-		    setTimeout(function() { window.scrollTo(0, 1); }, 1);
-		}, false);
-	    });
-	});
+require(['require', 'order!zepto', 'order!underscore', 'order!backbone', 'order!routers/router'], 
+	function(require, $, _, Backbone, Router) {
+		
+	    var router = new Router;	
+	    Backbone.history.start({root: '/~alex/github/teevee'});
+	    
+	    if(!window.location.hash)
+		router.navigate('/', true);							    
+});
 

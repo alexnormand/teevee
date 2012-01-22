@@ -6,11 +6,15 @@ define([
 ], function($, _, BaseView, showListTemplate) {
  
     var TeeveeSearchView = BaseView.extend({
-	el : $('#main'),
 	template : showListTemplate,
 
 	events : {
 	    'click .shows li' : "displaySeasons"
+	},
+
+	initialize: function() {
+	    this.collection.bind('reset', this.render, this);
+	    this.showSpinner();
 	},
 
 	displaySeasons : function(event) {
