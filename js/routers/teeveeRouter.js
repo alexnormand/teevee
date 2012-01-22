@@ -1,33 +1,50 @@
-define(['backbone'], function(Backbone){
-    var router = Backbone.Router.extend({
+define(
+    ['backbone', 
+     'views/teeveeRoot',
+     'views/teeveeSearch',
+     'views/teeveeSeasons',
+     'views/teeveeSeason', 
+     'collections/shows',
+     'collections/season',
+     'models/show'],
+    function(Backbone, TeeveeRootView, TeeveeSearchView, TeeveeSeasonsView, TeeveeSeasonView, Shows, Season, Show) {    
+
+	var TeeveeRouter = Backbone.Router.extend({
+	    routes : {	
+		'/'                            : 'root',
+		'/search/:query'               : 'search',
+		'/show/:showid/seasons'        : 'seasons',
+		'/show/:showid/season/:season' : 'season',	
+	    },
+	    
+	    root : function() {
+		var view = new TeeveeRootView({router: this});
+		view.render();
+	    },	
 	
-	routes : {	
-	    '/' : "bob",
-	    '/search/:query' : "jim",
-	    '/show/:showid/episodes':"ben"
-	},
+	    search : function(query) {		
+		var shows = new Shows,
+		    view  = new TeeveeSearchView({router: this, collection: shows});
+				
+		shows.setUrl(query);
+		shows.fetch();	
+	    },	
 
-
-	initialize: function(action) {
-//	    this.action = action;
-	},
+	    seasons: function(showid) {	
+		var show = new Show({id: showid}),
+    		    view = new TeeveeSeasonsView({router: this, model: show});		
+					
+		show.setUrl(showid);
+		show.fetch();							
+	    },
+	
+	    season : function(showid, season) {
+		var season = new Season(null, {showid: showid, season: season}),
+		      view = new TeeveeSeasonView({router : this, collection: season});
 		
-	root : function() {
-//	    this.action.root;
-	},
+		season.fetch();
+	    },
+	});
 	
-	
-	search : function(query) {
-//	    this.action.search.call(query);
-	},
-	
-	
-	episodes : function(showid) {
-//	    this.action.episodes(showid);
-	}
-	
+	return TeeveeRouter;	
     });
-    
-    return router;
-
-});

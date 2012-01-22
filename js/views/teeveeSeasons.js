@@ -12,14 +12,16 @@ define([
 	events : {
 	    'click .seasons li' : "displaySeason"
 	},
+	
+	initialize: function() {
+	    this.model.bind('change', this.render, this);
+	    this.showSpinner();
+	},
 
 	displaySeason : function(event) {
 	    event.preventDefault();	    	    
 	    var url = '/show/'   + this.model.get('id') +
                       '/season/' + event.target.id.slice(1);	  
-
-
-	    console.log(this.model.get('id'));
 
 	    this.options.router.navigate(url, true);
 	    this.el.html(this.spinner);	    

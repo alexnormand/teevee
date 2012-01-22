@@ -13,6 +13,11 @@ define([
 	    'click .shows li' : "displaySeasons"
 	},
 
+	initialize: function() {
+	    this.collection.bind('reset', this.render, this);
+	    this.showSpinner();
+	},
+
 	displaySeasons : function(event) {
 	    event.preventDefault();
 	    this.options.router.navigate('/show/' + event.target.id.slice(1) + '/seasons', true);
