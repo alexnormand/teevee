@@ -48,10 +48,12 @@
 	-->
     </target>
 
-    <!-- Copy index.html -->
-    <target name="-copy.index.html"
+    <!-- Copy index.html, apple-touch-icon, and all static files present 
+	 in the root directory -->
+    <target name="-copy.root.static.files"
 	    description="Copie index.html to build">
-      <copy file="${basedir}/index.html" tofile="${build.dir}/index.html" />
+      <copy file="${basedir}/index.html" todir="${build.dir}" />
+      <copy file="${basedir}/apple-touch-icon.png" todir="${build.dir}" />
       <echo>Copied index.html</echo>
     </target>
 	
@@ -97,7 +99,7 @@
         depends="
             -load.properties, 
             -init, 
-	    -copy.index.html,
+	    -copy.root.static.files,
 	    -copy.serverside,
             -js.concatenate,
             -css.minify">
