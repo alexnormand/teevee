@@ -1,9 +1,8 @@
 define([
     'zepto',
     'underscore',
-    'backbone',
-    'text!templates/root.html',
-], function($, _, Backbone, searchBoxTemplate) {
+    'backbone'    
+], function($, _, Backbone) {
  
     var BaseView = Backbone.View.extend({
 
