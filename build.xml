@@ -54,6 +54,7 @@
 	    description="Copie index.html to build">
       <copy file="${basedir}/index.html" todir="${build.dir}" />
       <copy file="${basedir}/apple-touch-icon.png" todir="${build.dir}" />
+      <copy file="${basedir}/favicon.ico" todir="${build.dir}" />
       <echo>Copied index.html</echo>
     </target>
 	
