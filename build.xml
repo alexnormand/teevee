@@ -80,7 +80,7 @@
                                 out=../${build.dir}/js/main.js" />
 	</exec>
 	<copy file="${src.js.dir}/lib/require/require-1.0.4.js" todir="${build.dir}/js/lib/require"/>
-	<echo>Finish JS concatenation and minification</echo>
+	<echo>Finished JS concatenation and minification</echo>
     </target>
 
 	    
