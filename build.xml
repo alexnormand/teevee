@@ -7,6 +7,8 @@
         description="Set properties for this build">
         <!--YUI Compressor location-->
         <property name="yui.dir" value="${user.home}/tools/yuicompressor-2.4.7.jar"/>
+	<!-- HTML compressor location-->
+	<property name="htmlcompressor.dir" value="${user.home}/tools/htmlcompressor-1.5.2.jar"/>
         <!--Source JS dir-->
         <property name="src.js.dir" value="${basedir}/js"/>
         <!--Source CSS dir-->
@@ -51,8 +53,11 @@
     <!-- Copy index.html, apple-touch-icon, and all static files present 
 	 in the root directory -->
     <target name="-copy.root.static.files"
-	    description="Copie index.html to build">
-      <copy file="${basedir}/index.html" todir="${build.dir}" />
+	    description="Copies index.html to build">
+      <exec executable="java" failonerror="true">
+	<arg line=" -jar ${htmlcompressor.dir} -o ${build.dir}/index.html --compress-js --compress-css ${basedir}/index.html" />
+      </exec>
+      <echo>Compressed index.html</echo>
       <copy file="${basedir}/apple-touch-icon.png" todir="${build.dir}" />
       <copy file="${basedir}/favicon.ico" todir="${build.dir}" />
       <echo>Copied index.html</echo>
