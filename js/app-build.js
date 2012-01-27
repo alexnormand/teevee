@@ -4,6 +4,7 @@
     paths: {
 	text: 'lib/require/text',
 	order: 'lib/require/order',
+	fastclick: 'lib/fastclick',
 	zepto: 'lib/zepto-0.8',
 	underscore: 'lib/underscore-1.2.4',
 	backbone: 'lib/backbone-0.5.3'

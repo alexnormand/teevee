@@ -66,6 +66,7 @@ ul.current {
 li {
     list-style-type: none; 
     padding: 1em;
+    cursor: pointer;
     border-bottom: 1px solid grey;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#FDFDFD), to(#eee));
     background-image: -webkit-linear-gradient(#FDFDFD, #eee);
@@ -73,7 +74,7 @@ li {
     background-image: -o-linear-gradient(#FDFDFD, #eee);
     background-image: -ms-linear-gradient(#FDFDFD, #eee);
     background-image: linear-gradient(#FDFDFD, #eee);
-    border-color: #D6D6D6;
+    border-color: #D6D6D6;    
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
@@ -82,7 +83,7 @@ li {
     user-select: none;    
 }
 
-li:hover, li:active {
+li:hover {
     background-image: -webkit-gradient(linear, left top, left bottom, from(#EDEDED), to(#DADADA));
     background-image: -webkit-linear-gradient(#EDEDED, #DADADA);
     background-image: -moz-linear-gradient(#EDEDED, #DADADA);
@@ -91,6 +92,14 @@ li:hover, li:active {
     background-image: linear-gradient(#EDEDED, #DADADA);
 }
 
+li:active {
+    background-image: -webkit-linear-gradient(#5F9CC5, #396B9E);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#5F9CC5), to(#396B9E));
+    background-image: -moz-linear-gradient(#5F9CC5, #396B9E);
+    background-image: -ms-linear-gradient(#5F9CC5, #396B9E);
+    background-image: -o-linear-gradient(#5F9CC5, #396B9E);
+    background-image: linear-gradient(114deg, #AB1364, #52FF26);     
+}
 
 #container {
     overflow: hidden;
