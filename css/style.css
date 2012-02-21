@@ -134,7 +134,9 @@ li:active {
 	margin : 0;
 	background-color: #E0E0E0;
     }
-
+    img {
+	width: 100%;
+    }
     #container {
 	width: 100%;
 	box-shadow: none;
