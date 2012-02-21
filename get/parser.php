@@ -43,7 +43,16 @@ class Parser {
    private function getJSON($baseurl, $params) {
      $url = $baseurl . $this->traktApiKey . '/' . implode('/', $params);
      
-     return json_decode(file_get_contents($url), true);
+     $ch = curl_init();          
+     curl_setopt($ch, CURLOPT_URL, $url);
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+     curl_setopt($ch, CURLOPT_TIMEOUT, 40);
+     curl_setopt($ch, CURLOPT_FAILONERROR, false); //trakt sends a 401 with 
+     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);     
+     
+     return json_decode(curl_exec($ch), true);
    }
 
    /**
