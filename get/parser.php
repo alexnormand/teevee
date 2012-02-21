@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . '/trakt.php';
-
 /**
  * TV Show Parser
  */
@@ -15,7 +13,7 @@ class Parser {
    * @param string|int  the query string|the id of a tv show.
    */
   public function __construct($query) { 
-    $this->trakt = new Trakt('aeddefdbcdd7ca5a2b9855b940389ebe');
+    $this->traktApiKey = 'aeddefdbcdd7ca5a2b9855b940389ebe';
 
     if(is_int($query))
       $this->result = $this->getSeasons($query);              
@@ -34,6 +32,20 @@ class Parser {
      return json_encode($this->result);
    }
 
+
+   /**
+    * Returns an array representation of a remote json api call.
+    *
+    * @param  string $url the url of the trakt api call.
+    * @param  array $params request parameters.
+    * @return array returns the value encoded in json in a PHP array.
+    */
+   private function getJSON($baseurl, $params) {
+     $url = $baseurl . $this->traktApiKey . '/' . implode('/', $params);
+     
+     return json_decode(file_get_contents($url), true);
+   }
+
    /**
     * Extract the list of TV Shows from the search results page.
     *
@@ -41,10 +53,12 @@ class Parser {
     * @return array an array containing the download links.
     */
    private function getTVShowList($query) {  
-     return array_map(function($s){
-	 return array('id' => $s['tvdb_id'], 'title' => $s['title']);
+     $shows = $this->getJSON('http://api.trakt.tv/search/shows.json/', 
+			     array($query));         
 
-     }, $this->trakt->searchShows($query));
+     return array_map(function($s){
+	 return  array('id' => $s['tvdb_id'], 'title' => $s['title']);           
+     }, $shows);
    }
 
    /**
@@ -52,8 +66,11 @@ class Parser {
     * @param int $showid the id fo the show    
     * @return array the list of seasons
     */
-   private function getSeasons($showid) {          
-     return array('seasons' => array_keys($this->trakt->showSeasons($showid)));
+   private function getSeasons($showid) {    
+     $seasons = $this->getJSON('http://api.trakt.tv/show/seasons.json/',
+			       array($showid));
+
+     return array('seasons' => array_keys($seasons));
    }
 
    /**
@@ -63,18 +80,19 @@ class Parser {
     * @param $season 
     * @return array an array containing the list of episodes.
     */
-   private function getEpisodes($showid, $season) {      
-   
+   private function getEpisodes($showid, $season) {         
+     $episodes = $this->getJSON('http://api.trakt.tv/show/season.json/',
+				array($showid,$season));
+         
      return array_map(function($e) use($showid) {	 
 	 return  array('id'       => $e['episode'],		       
 		       'showid'   => $showid,
 		       'season'   => $e['season'],
 		       'title'    => $e['title'],
-		       'airdate'  => date('r',$e['first_aired']),
+		       'airdate'  => date('r', $e['first_aired']),
 		       'overview' => $e['overview'],
-		       'image'    => $e['images']['screen']) ?: '';
-
-     }, $this->trakt->showSeason($showid, $season));   
-   } 
+		       'image'    => $e['images']['screen'] ?: '');
+     }, $episodes);
+   }
        
 }
