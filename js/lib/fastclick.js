@@ -45,7 +45,7 @@
  * @copyright (c) 2011 Assanka Limited
  * @author Rowan Beentje <rowan@assanka.net>, Matt Caruana Galizia <matt@assanka.net>
  */
-
+define(function() {
 var FastClick = (function() {
 
 	// Determine whether touch handling is supported
@@ -178,3 +178,8 @@ var FastClick = (function() {
 	}
 
 })();
+
+
+    return FastClick;
+
+});
