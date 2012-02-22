@@ -22,7 +22,7 @@ require(['require','order!fastclick', 'order!zepto', 'order!underscore', 'order!
 	    new FastClick(document.body);
 
 	    var router = new Router;	
-	    Backbone.history.start({root: '/~alex/github/teevee'});
+	    Backbone.history.start();
 	    
 	    if(!window.location.hash)
 		router.navigate('/', true);							    

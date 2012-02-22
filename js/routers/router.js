@@ -11,10 +11,10 @@ define(
 
 	var Router = Backbone.Router.extend({
 	    routes : {	
-		'/'                            : 'root',
-		'/search/:query'               : 'search',
-		'/show/:showid/seasons'        : 'seasons',
-		'/show/:showid/season/:season' : 'season',	
+		''                            : 'root',
+		'search/:query'               : 'search',
+		'show/:showid/seasons'        : 'seasons',
+		'show/:showid/season/:season' : 'season',	
 	    },
 	    
 	    root : function() {
