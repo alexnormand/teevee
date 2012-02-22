@@ -5,7 +5,7 @@
 class Parser {
 
   private $result;            
-  private $trakt;
+  private $traktApiKey;
 
   /**
    * Constructor.
