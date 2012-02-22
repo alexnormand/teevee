@@ -20,11 +20,11 @@ define([
 	displaySeasons : function(event) {
 	    event.preventDefault();
 	    this.options.router.navigate('/show/' + event.target.id.slice(1) + '/seasons', true);
-	    this.el.html(this.spinner);
+	    this.$el.html(this.spinner);
 	},
 
 	render : function() {
-	    this.el.html(_.template(
+	    this.$el.html(_.template(
 		this.template, 
 		{list : this.collection.toJSON(), cssClass: 'shows'}));			    	    	    
 

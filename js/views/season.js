@@ -29,7 +29,7 @@ define([
 	  
 
 	    this.options.router.navigate(url);
-	    this.el.html(html);
+	    this.$el.html(html);
 	    this.slideIn();
 	},
 

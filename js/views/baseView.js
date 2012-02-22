@@ -6,12 +6,12 @@ define([
  
     var BaseView = Backbone.View.extend({
 
-	el: $('#main'),
+	el: '#main',
 
 	spinner : '<div id="spinner"></div>',
 
 	showSpinner : function() {
-	    this.el.html(this.spinner);
+	    this.$el.html(this.spinner);
 	},
 
 	slideIn: function() {
