@@ -23,11 +23,11 @@ define([
                       '/season/' + event.target.id.slice(1);	  
 
 	    this.options.router.navigate(url, true);
-	    this.el.html(this.spinner);	    
+	    this.$el.html(this.spinner);	    
 	},
 
 	render : function(event) {
-	    this.el.html(_.template(this.template, {list : this.model.get('seasons')}));
+	    this.$el.html(_.template(this.template, {list : this.model.get('seasons')}));
 	    this.slideIn();
 	    return this;
 	}		
