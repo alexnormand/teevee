@@ -1,6 +1,6 @@
 ({
-    appDir: "./",
     baseUrl: "./",
+    out: "../build/js/main.js",
     paths: {
 	text: 'lib/require/text',
 	order: 'lib/require/order',
