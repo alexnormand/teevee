@@ -82,7 +82,7 @@
                                 findNestedDependencies=true 
                                 name=main" />
 	</exec>
-	<copy file="${src.js.dir}/lib/require/require-1.0.4.js" todir="${build.dir}/js/lib/require"/>
+	<copy file="${src.js.dir}/lib/require/require.js" todir="${build.dir}/js/lib/require"/>
 	<echo>Finished JS concatenation and minification</echo>
     </target>
 
