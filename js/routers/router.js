@@ -29,13 +29,9 @@ define(
 		    view  = new SearchView({router: this, collection: shows});
 				
 		shows.setUrl(query);
-		$.ajax({
-		    url: shows.url,
-		    dataType: 'json',
-		    success: function(json) {			
-			shows.reset(json);			
-			view.main.html(view.el);
-		    }
+		$.getJSON(shows.url, function(json) {			
+		    shows.reset(json);			
+		    view.main.html(view.el);
 		});
 	    },	
 
@@ -44,13 +40,9 @@ define(
     		    view = new SeasonsView({router: this, model: show});		
 					
 		show.setUrl(showid);
-		$.ajax({
-		    url: show.url,
-		    dataType: 'json',
-		    success: function(json) {
-			show.set(json);
-			view.main.html(view.el);
-		    }
+		$.getJSON(show.url, function(json) {
+		    show.set(json);
+		    view.main.html(view.el);
 		});						
 	    },
 	
@@ -58,13 +50,9 @@ define(
 		var season = new Season(null, {showid: showid, season: season}),
 		      view = new SeasonView({router : this, collection: season});
 		
-		$.ajax({
-		    url: season.url,
-		    dataType: 'json',
-		    success: function(json) {
-			season.reset(json);
-			view.main.html(view.el);
-		    }
+		$.getJSON(season.url, function(json) {
+		    season.reset(json);
+		    view.main.html(view.el);		    
 		});		
 	    },
 	});
