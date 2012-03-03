@@ -9,8 +9,10 @@ define([
     var TeeveeSeasonView = BaseView.extend({
 	template : episodeListTemplate,
 
+	tagName: 'ul',
+
 	events : {
-	    'click .episodes li ' : "displayEpisode"
+	    'click li ' : "displayEpisode"
 	},
 
 	initialize: function() {
@@ -27,17 +29,14 @@ define([
                           '/episode/' + episode.get('id'),
                    html = _.template(episodeTemplate, {episode: episode.toJSON()});
 	  
-
-	    this.options.router.navigate(url);
-	    this.$el.html(html);
+	    this.options.router.navigate(url);	
+	    this.main.html(html);
 	    this.slideIn();
 	},
 
 	render : function(event) {
-	    this.$el.html(_.template(
-		this.template, 
-		{list : this.collection.toJSON(), cssClass : 'episodes'}));			    	    	    	    
-
+	    this.$el.html(_.template(this.template,
+				     {list : this.collection.toJSON()}));			    	    	    	    
 	    this.slideIn();
 	    return this;
 	}		

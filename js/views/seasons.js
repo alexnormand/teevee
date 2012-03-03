@@ -7,9 +7,11 @@ define([
  
     var TeeveeSeasonsView = BaseView.extend({
 	template : episodeListTemplate,
+	
+	tagName: 'ul',
 
 	events : {
-	    'click .seasons li' : "displaySeason"
+	    'click li' : "displaySeason"
 	},
 	
 	initialize: function() {
@@ -23,7 +25,7 @@ define([
                       '/season/' + event.target.id.slice(1);	  
 
 	    this.options.router.navigate(url, true);
-	    this.$el.html(this.spinner);	    
+	    this.main.html(this.spinner);	    
 	},
 
 	render : function(event) {

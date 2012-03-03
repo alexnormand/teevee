@@ -8,8 +8,11 @@ define([
     var Teevee = BaseView.extend({	
 	template : searchBoxTemplate,
 
+	tagName: 'form',
+	id: 'target',
+
 	events : {
-	    'submit #target' : "search"
+	    'submit' : "search"
 	},
 
 	search : function(event) {
@@ -18,9 +21,8 @@ define([
 	    this.options.router.navigate('/search/' +  encodeURIComponent(query), true);
 	},
 
-
 	render : function(event) {
-	    this.$el.html(this.template);	    
+	    this.$el.html(this.template);	   
 	    return this;
 	}		
     });

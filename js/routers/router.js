@@ -10,6 +10,7 @@ define(
     function(Backbone, RootView, SearchView, SeasonsView, SeasonView, Shows, Season, Show) {    
 
 	var Router = Backbone.Router.extend({
+
 	    routes : {	
 		''                            : 'root',
 		'search/:query'               : 'search',
@@ -19,7 +20,8 @@ define(
 	    
 	    root : function() {
 		var view = new RootView({router: this});
-		view.render();
+		view.render();	
+		view.main.html(view.el);
 	    },	
 	
 	    search : function(query) {		
@@ -27,7 +29,14 @@ define(
 		    view  = new SearchView({router: this, collection: shows});
 				
 		shows.setUrl(query);
-		shows.fetch();	
+		$.ajax({
+		    url: shows.url,
+		    dataType: 'json',
+		    success: function(json) {			
+			shows.reset(json);			
+			view.main.html(view.el);
+		    }
+		});
 	    },	
 
 	    seasons: function(showid) {	
@@ -35,14 +44,28 @@ define(
     		    view = new SeasonsView({router: this, model: show});		
 					
 		show.setUrl(showid);
-		show.fetch();							
+		$.ajax({
+		    url: show.url,
+		    dataType: 'json',
+		    success: function(json) {
+			show.set(json);
+			view.main.html(view.el);
+		    }
+		});						
 	    },
 	
 	    season : function(showid, season) {
 		var season = new Season(null, {showid: showid, season: season}),
 		      view = new SeasonView({router : this, collection: season});
 		
-		season.fetch();
+		$.ajax({
+		    url: season.url,
+		    dataType: 'json',
+		    success: function(json) {
+			season.reset(json);
+			view.main.html(view.el);
+		    }
+		});		
 	    },
 	});
 	

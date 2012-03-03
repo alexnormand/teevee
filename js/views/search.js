@@ -8,8 +8,10 @@ define([
     var TeeveeSearchView = BaseView.extend({
 	template : showListTemplate,
 
+	tagName: 'ul',
+	
 	events : {
-	    'click .shows li' : "displaySeasons"
+	    'click  li' : "displaySeasons"
 	},
 
 	initialize: function() {
