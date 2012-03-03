@@ -101,6 +101,10 @@ li:active {
     background-image: linear-gradient(114deg, #AB1364, #52FF26);     
 }
 
+.episode li:last-child {
+    text-align: center;
+}
+
 #container {
     overflow: hidden;
     margin: 0px auto;
