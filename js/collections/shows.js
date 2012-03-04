@@ -3,11 +3,9 @@ define(['backbone', 'models/show'], function(Backbone, Show) {
     var Shows = Backbone.Collection.extend({
 	model : Show,
 
-	setUrl: function(query) {
-	    this.url = 'get/search/' + query;
+	initialize : function(models, options) {
+	    this.url = 'get/search/' + options.query;
 	}
-	
-
     });
     
     return Shows;

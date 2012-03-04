@@ -7,7 +7,6 @@ define(['backbone', 'models/episode'], function(Backbone, Episode) {
 	    this.url = 'get/show/' + options.showid + 
 		       '/season/'  + options.season;
 	}
-
     });
     
     return Season;

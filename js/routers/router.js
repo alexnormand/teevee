@@ -25,10 +25,9 @@ define(
 	    },	
 	
 	    search : function(query) {		
-		var shows = new Shows,
+		var shows = new Shows(null, {query: query}),
 		    view  = new SearchView({router: this, collection: shows});
 				
-		shows.setUrl(query);
 		$.getJSON(shows.url, function(json) {			
 		    shows.reset(json);			
 		    view.main.html(view.el);
@@ -37,10 +36,9 @@ define(
 
 	    seasons: function(showid) {	
 		var show = new Show({id: showid}),
-    		    view = new SeasonsView({router: this, model: show});		
-					
-		show.setUrl(showid);
-		$.getJSON(show.url, function(json) {
+    		    view = new SeasonsView({router: this, model: show});
+	
+		$.getJSON(show.url(), function(json) {
 		    show.set(json);
 		    view.main.html(view.el);
 		});						

@@ -1,9 +1,6 @@
 define(['backbone'], function(Backbone ) {
-    var Show = Backbone.Model.extend({
-
-	setUrl: function(showid) {
-	    this.url = 'get/seasons/' + showid;
-	}
+    var Show = Backbone.Model.extend({	
+	urlRoot: 'get/seasons'
     }); 
 
     return Show;
