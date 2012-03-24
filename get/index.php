@@ -5,11 +5,14 @@ require_once __DIR__ . '/parser.php';
 use Symfony\Component\HttpFoundation\Response;
 
 $getJSON =  function ($query) {
-  return new Response(
-     new Parser($query),			
-     200,
-     array('Content-Type' => 'application/json')
-  );    
+  $response =  new Response(
+		    new Parser($query),			
+		    200,
+		    array('Content-Type' => 'application/json')
+		   );
+    
+  $response->setMaxAge(7*60);
+  return $response;
 };
 
 
