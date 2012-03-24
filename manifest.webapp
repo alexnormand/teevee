@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "name": "Teevee",
+  "description": "Episode guide for TV Shows",
+  "icons": {
+    "57": "/apple-touch-icon.png"
+  },  
+  "developer": {
+    "name": "Alex Normand",
+    "url": "http://www.alexnormand.com"
+  },
+  "installs_allowed_from": [
+    "https://appstore.mozillalabs.com",
+    "https://marketplace.mozilla.org"
+  ]  
+}
