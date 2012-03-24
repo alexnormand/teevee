@@ -60,6 +60,13 @@
       <echo>Compressed index.html</echo>
       <copy file="${basedir}/apple-touch-icon.png" todir="${build.dir}" />
       <copy file="${basedir}/favicon.ico" todir="${build.dir}" />
+      <!-- Add single JavaScript file dynamically to avoid page blocking and remove require.js 
+	   since it is replaced by the almond.js minimal "shim" AMD loader.	-->
+      <replaceregexp
+	  match='&lt;script data-main="js/main" src="js/lib/require/require.js"&gt;&lt;/script&gt;' 
+	  replace='&lt;script&gt;s=document.createElement("script");s.src="js/main.js";document.body.appendChild(s);&lt;/script&gt;'>
+	<fileset dir="${build.dir}" includes="index.html"/>
+      </replaceregexp>      
       <echo>Copied index.html</echo>
     </target>
 	
@@ -78,11 +85,8 @@
     <target name="-js.concatenate"
         description="Concatenates specified JavaScript files">      
         <exec executable="node" failonerror="true">
-	  <arg line=" ${r.node} -o ${app.build.js}
-                                findNestedDependencies=true 
-                                name=main" />
+	  <arg line=" ${r.node} -o ${app.build.js}" />
 	</exec>
-	<copy file="${src.js.dir}/lib/require/require.js" todir="${build.dir}/js/lib/require"/>
 	<echo>Finished JS concatenation and minification</echo>
     </target>
 

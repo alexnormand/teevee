@@ -10,12 +10,7 @@
 	backbone: 'lib/backbone'
     },
     optimize: "uglify",
-    modules: [
-        {
-            name: "main",
-            exclude: [
-                // If you prefer not to include certain libs exclude them here
-            ]
-        }
-    ]
+    name: 'lib/require/almond',
+    include: 'main',
+    wrap:true
 })

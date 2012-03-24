@@ -1,8 +1,3 @@
-/**
- * @license RequireJS order 1.0.5 Copyright (c) 2010-2011, The Dojo Foundation All Rights Reserved.
- * Available via the MIT or new BSD license.
- * see: http://github.com/jrburke/requirejs for details
- */
 /*jslint nomen: false, plusplus: false, strict: false */
 /*global require: false, define: false, window: false, document: false,
   setTimeout: false */
