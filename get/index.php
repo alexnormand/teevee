@@ -1,20 +1,11 @@
 <?php
-require_once __DIR__ . '/silex.phar';
-require_once __DIR__ . '/parser.php';
-use Symfony\Component\HttpFoundation\Response;
+require_once __DIR__ . '/vendors/silex.phar';
 
 $app = new Silex\Application();
 
-$app['getJSON'] =  $app->protect(function ($query) {
-  $response =  new Response(
-		    new Parser($query),			
-		    200,
-		    array('Content-Type' => 'application/json')
-		   );
-    
-  $response->setMaxAge(7*60);
-  return $response;
-});
+$app['autoloader']->registerNamespace('Teevee', __DIR__.'/src/'); 
+$app->register(new Teevee\TeeveeServiceProvider());
+
 
 $app->get('/search/{query}', function ($query) use($app) {
     return $app['getJSON'](urlencode($app->escape($query)));

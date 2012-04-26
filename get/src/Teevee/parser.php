@@ -1,4 +1,7 @@
-<?php
+<?Php
+
+namespace Teevee;
+
 /**
  * TV Show Parser
  */
@@ -28,8 +31,8 @@ class Parser {
     *
     * @return string the links in json format
     */
-   public function __toString() {
-     return json_encode($this->result);
+   public function getResult() {
+     return $this->result;
    }
 
 
