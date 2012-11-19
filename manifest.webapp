@@ -10,7 +10,7 @@
     "url": "http://www.alexnormand.com"
   },
   "installs_allowed_from": [
-    "https://appstore.mozillalabs.com",
-    "https://marketplace.mozilla.org"
+    "https://appstore.mozillalabs.com",    
+    "https://marketplace.firefox.com"
   ]
 }
