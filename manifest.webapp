@@ -9,8 +9,7 @@
     "name": "Alex Normand",
     "url": "http://www.alexnormand.com"
   },
-  "installs_allowed_from": [
-    "https://appstore.mozillalabs.com",    
+  "installs_allowed_from": [    
     "https://marketplace.firefox.com"
   ]
 }
