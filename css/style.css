@@ -48,18 +48,27 @@ a {
 
 ul {
     padding: 0;
-    margin-left: 666px;
     text-align: left;
     font-size: 116%;
-    -webkit-transition: margin ease-in 0.3s;
-    -moz-transition: margin ease-in 0.3s;
-    -ms-transition: margin ease-in 0.3s;
-    -o-transition: margin ease-in 0.3s;
+    -webkit-transition: -webkit-transform ease-in 0.4s;
+    -moz-transition: -moz-transform ease-in 0.4s;
+    -ms-transition: -ms-transform ease-in 0.4s;
+    -o-transition: -o-transform ease-in 0.4s;
+    transition: transform ease-in 0.4s;
+
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    transform: translateX(100%);
 }
 
-
 ul.current {
-    margin: 0;
+    -webkit-transform: translateX(0%) translateZ(0);
+    -moz-transform: translateX(0%) translateZ(0);
+    -ms-transform: translateX(0%) translateZ(0);
+    -o-transform: translateX(0%) translateZ(0);
+    transform: translateX(0%) translateZ(0);
 }
 
 
