@@ -34,23 +34,23 @@
         <tstamp>
             <format property="TODAY" pattern="EEE, d MMM yyyy HH:mm:ss Z"/>
         </tstamp>
-        
+
         <!--Delete previous build files-->
         <delete dir="${build.dir}"/>
-        
+
         <!--Recreate the build directories-->
         <mkdir dir="${build.dir}"/>
         <mkdir dir="${build.dir}/js"/>
         <mkdir dir="${build.dir}/css"/>
 	<mkdir dir="${build.dir}/get" />
-        
+
         <!--Log the build timestamps to file
         <echo file="${build.dir}/js/tstamp.txt" append="false">Build Date: ${TODAY}</echo>
         <echo file="${build.dir}/css/tstamp.txt" append="false">Build Date: ${TODAY}</echo>
 	-->
     </target>
 
-    <!-- Copy index.html, apple-touch-icon, and all static files present 
+    <!-- Copy index.html, apple-touch-icon, and all static files present
 	 in the root directory -->
     <target name="-copy.root.static.files"
 	    description="Copies index.html to build">
@@ -59,54 +59,55 @@
       </exec>
       <echo>Compressed index.html</echo>
       <copy file="${basedir}/apple-touch-icon.png" todir="${build.dir}" />
+      <copy file="${basedir}/apple-touch-icon-128x128.png" todir="${build.dir}" />
       <copy file="${basedir}/favicon.ico" todir="${build.dir}" />
-      <!-- Add single JavaScript file dynamically to avoid page blocking and remove require.js 
+      <!-- Add single JavaScript file dynamically to avoid page blocking and remove require.js
 	   since it is replaced by the almond.js minimal "shim" AMD loader.	-->
       <replaceregexp
-	  match='&lt;script data-main="js/main" src="js/lib/require/require.js"&gt;&lt;/script&gt;' 
+	  match='&lt;script data-main="js/main" src="js/lib/require/require.js"&gt;&lt;/script&gt;'
 	  replace='&lt;script&gt;s=document.createElement("script");s.src="js/main.js";document.body.appendChild(s);&lt;/script&gt;'>
 	<fileset dir="${build.dir}" includes="index.html"/>
-      </replaceregexp>      
+      </replaceregexp>
       <echo>Copied index.html</echo>
     </target>
-	
+
     <!-- Server side code -->
     <target name="-copy.serverside"
 	    description="Copies serverside code to build dir">
       <copy todir="${build.dir}/get">
 	  <fileset dir="${src.serverside.dir}" excludes="." />
-      </copy>    
-      <copy file="${src.serverside.dir}/.htaccess"  todir="${build.dir}/get"/>	
+      </copy>
+      <copy file="${src.serverside.dir}/.htaccess"  todir="${build.dir}/get"/>
       <echo>Copied server side code</echo>
     </target>
 
-	
+
     <!--Concatenate JS files-->
     <target name="-js.concatenate"
-        description="Concatenates specified JavaScript files">      
+        description="Concatenates specified JavaScript files">
         <exec executable="node" failonerror="true">
 	  <arg line=" ${r.node} -o ${app.build.js}" />
 	</exec>
 	<echo>Finished JS concatenation and minification</echo>
     </target>
 
-	    
+
     <!--Minify CSS files-->
     <target name="-css.minify"
         description="Minifies CSS files">
       <exec executable="java" failonerror="true">
 	<arg line=" -jar ${yui.dir} -o ${build.dir}/css/style.css ${src.css.dir}/style.css "/>
-      </exec>            
+      </exec>
       <echo>Finished CSS minification</echo>
     </target>
 
 
     <!--Build-->
-    <target name="prod" 
+    <target name="prod"
         description="Builds project files for production use"
         depends="
-            -load.properties, 
-            -init, 
+            -load.properties,
+            -init,
 	    -copy.root.static.files,
 	    -copy.serverside,
             -js.concatenate,
