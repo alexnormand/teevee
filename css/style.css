@@ -55,12 +55,6 @@ ul {
     -ms-transition: -ms-transform ease-in 0.4s;
     -o-transition: -o-transform ease-in 0.4s;
     transition: transform ease-in 0.4s;
-
-    -webkit-transform: translateX(100%);
-    -moz-transform: translateX(100%);
-    -ms-transform: translateX(100%);
-    -o-transform: translateX(100%);
-    transform: translateX(100%);
 }
 
 ul.current {
