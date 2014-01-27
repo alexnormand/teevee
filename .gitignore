@@ -1,3 +1,6 @@
 build/*
 *~
 *.xcf
+nohup.out
+js/lib/*
+.DS_Store

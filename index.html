@@ -1,52 +1,45 @@
 <!DOCTYPE html>
-<html lang="en-us">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="episode guide for television series mobile web app">
-  <meta name="author" content="Alex Normand">
-  <title>Teevee</title>
+<html ng-app="teevee">
+  <head>
+    <meta charset="utf-8">
+    <title>Teevee</title>
 
-  <link rel="stylesheet" href="css/style.css"/>  
-  <link href="http://fonts.googleapis.com/css?family=Acme&amp;text=Tev!" rel="stylesheet" />
-  <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" /> 
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-</head>
-<body>
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 
-  <div id="container">
-    <h1><a href="/">Teevee!!</a></h1>
-    <h4> Search for a TV Show</h4>
-    <div id="main">
-    </div>
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!-- Set a shorter title for iOS6 devices when saved to home screen -->
+    <meta name="apple-mobile-web-app-title" content="Ratchet">
+
+    <!-- Set Apple icons for when prototype is saved to home screen -->
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="touch-icons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="touch-icons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="touch-icons/apple-touch-icon-57x57.png">
+
+    <link href="http://fonts.googleapis.com/css?family=Acme&amp;text=Tev!" rel="stylesheet">
+    <link rel="stylesheet" href="/js/lib/ratchet/dist/ratchet.css">
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+
+  <!-- Make sure all your bars are the first things in your <body> -->
+  <header class="bar-title">
+    <h1 class="title">Teevee</h1>
+  </header>
+
+  <!-- Wrap all non-bar HTML in the .content div (this is actually what scrolls) -->
+  <div class="content" ng-controller="homePage">
+    <form ng-submit="searchShows()">
+      <input ng-model="search" type="search" placeholder="Search for a TV Show...">
+    </form>
   </div>
 
-<script data-main="js/main"  src="js/lib/require/require.js"></script>
-<!-- prompt google chrome frame install for IE users-->
-<!--[if IE]>
-    <script 
-       src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">
-    </script>
-    <style>
-     .chromeFrameInstallDefaultStyle {
-       width: 100%; /* default is 800px */
-       border: 5px solid blue;
-     }
-    </style>
-
-    <div id="prompt">
-    </div>
- 
-    <script>
-     window.attachEvent("onload", function() {
-       CFInstall.check({
-         mode: "inline", // the default
-         node: "prompt"
-       });
-     });
-    </script>
-  <![endif]-->
-</body>
+    <script src="/js/lib/ratchet/dist/ratchet.js"></script>
+    <script src="/js/lib/angular/angular.js"></script>
+    <script src="/js/lib/angular-route/angular-route.js"></script>
+    <script src="/js/app.js"></script>
+  </body>
 </html>
