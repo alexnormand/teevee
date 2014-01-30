@@ -31,15 +31,14 @@
   </header>
 
   <!-- Wrap all non-bar HTML in the .content div (this is actually what scrolls) -->
-  <div class="content" ng-controller="homePage">
-    <form ng-submit="searchShows()">
-      <input ng-model="search" type="search" placeholder="Search for a TV Show...">
-    </form>
+  <div class="content">
+    <div ng-view></div>
   </div>
 
     <script src="/js/lib/ratchet/dist/ratchet.js"></script>
     <script src="/js/lib/angular/angular.js"></script>
     <script src="/js/lib/angular-route/angular-route.js"></script>
+    <script src="/js/lib/angular-touch/angular-touch.js"></script>
     <script src="/js/app.js"></script>
   </body>
 </html>
