@@ -1,36 +1,32 @@
-var teevee = angular.module('teevee', ['ngRoute', 'ngTouch']);
+var teevee = angular.module('teevee', ['ngRoute', 'ngTouch', 'ngAnimate']);
 
 teevee.config(function($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 
   $routeProvider
     .when('/', { templateUrl: '/partials/home.html', controller: 'homeCtrl' })
-    .when('/search/:search', { templateUrl: '/partials/searchResults.html', controller: 'searchResultsCtrl' })
-    .when('/shows/:showId', { templateUrl: '/partials/showSeasons.html', controller: 'showSeasonsCtrl' })
-    .when('/shows/:showId/seasons/:seasonId', { templateUrl: '/partials/showSeasonEpisodes.html', controller: 'showSeasonEpisodesCtrl' })
+    .when('/search/:query', { templateUrl: '/partials/searchResults.html', controller: 'searchResultsCtrl' })
+    .when('/shows/:showId/seasons', { templateUrl: '/partials/showSeasons.html', controller: 'showSeasonsCtrl' })
+    .when('/shows/:showId/seasons/:seasonId/episodes', { templateUrl: '/partials/showSeasonEpisodes.html', controller: 'showSeasonEpisodesCtrl' })
     .when('/shows/:showId/seasons/:seasonId/episodes/:episodeId', { templateUrl: '/partials/showEpisode.html', controller: 'showEpisodeCtrl' })
     .otherwise({ redirectTo: '/' });
-
 });
 
-teevee.controller('homeCtrl',
-  ['$scope', '$location', '$http', 'resultsService', function($scope, $location, $http, resultsService) {
-
+teevee.controller('homeCtrl', function($scope, $location, $http) {
   $scope.searchShows = function() {
-    $http.get('/get/search/' + $scope.query)
-      .success(function(data) {
-        resultsService.json = data;
-        $location.path('/search/' + $scope.query);
-      })
-      .error(function() {
-        console.log('something went wrong...');
-      });
+    $location.path('/search/' + $scope.query);
   };
-}]);
+});
 
-teevee.controller('searchResultsCtrl', ['$scope', 'resultsService', function($scope, resultsService) {
-  $scope.results = resultsService.json;
-}]);
+teevee.controller('searchResultsCtrl', function($scope, $http, $routeParams) {
+  $http.get('/get/search/' + $routeParams.query)
+    .success(function(data) {
+      $scope.results = data;
+    })
+    .error(function(status, response){
+      console.log('something went wrong');
+    });
+});
 
 teevee.controller('showSeasonsCtrl', function($scope, $routeParams, $http) {
   $http.get('/get/shows/' + $routeParams.showId + '/seasons')
@@ -64,14 +60,3 @@ teevee.controller('showEpisodeCtrl', function($scope, $routeParams, $http) {
       console.log('somethig went wrong');
     });
 });
-
-
-teevee.service('resultsService', function() {
-  this.json = [];
-});
-
-
-
-
-
-
