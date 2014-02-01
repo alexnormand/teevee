@@ -6,9 +6,9 @@ teevee.config(function($routeProvider, $locationProvider) {
   $routeProvider
     .when('/', { templateUrl: '/partials/home.html', controller: 'homeCtrl' })
     .when('/search/:query', { templateUrl: '/partials/searchResults.html', controller: 'searchResultsCtrl' })
-    .when('/shows/:showId/seasons', { templateUrl: '/partials/showSeasons.html', controller: 'showSeasonsCtrl' })
-    .when('/shows/:showId/seasons/:seasonId/episodes', { templateUrl: '/partials/showSeasonEpisodes.html', controller: 'showSeasonEpisodesCtrl' })
-    .when('/shows/:showId/seasons/:seasonId/episodes/:episodeId', { templateUrl: '/partials/showEpisode.html', controller: 'showEpisodeCtrl' })
+    .when('/shows/:showId/seasons', { templateUrl: '/partials/seasons.html', controller: 'showSeasonsCtrl' })
+    .when('/shows/:showId/seasons/:seasonId/episodes', { templateUrl: '/partials/seasonEpisodes.html', controller: 'showSeasonEpisodesCtrl' })
+    .when('/shows/:showId/seasons/:seasonId/episodes/:episodeId', { templateUrl: '/partials/episode.html', controller: 'showEpisodeCtrl' })
     .otherwise({ redirectTo: '/' });
 });
 
