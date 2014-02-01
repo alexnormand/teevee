@@ -108,7 +108,7 @@ class Parser {
         'showid'   => $showid,
         'season'   => $e['season'],
         'title'    => $e['title'],
-        'airdate'  => date('r', $e['first_aired']),
+        'airdate'  => date('l, j F Y', $e['first_aired']),
         'overview' => $e['overview'],
         'image'    => $e['images']['screen'] ?: ''
       );
