@@ -1,7 +1,7 @@
 <ul class="list">
   <li ng-repeat="episode in episodes">
     <a href="/shows/{{showId}}/seasons/{{seasonId}}/episodes/{{episode.id}}">
-      {{ episode.title }}
+      {{ $index +1}}. {{ episode.title }}
     </a>
     <span class="chevron"></span>
   </li>
