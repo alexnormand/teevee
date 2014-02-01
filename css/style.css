@@ -1,3 +1,7 @@
+body {
+  font-family: 'Open Sans';
+}
+
 input[type=search] {
   height: 36px;
   font-size: 15px;
@@ -8,11 +12,11 @@ form {
 }
 
 li:hover {
-  background-color: #FAFAFA;
+  background-color: #F5F5F5;
 }
 
 li:active {
-  background-color: #F6F6F6;
+  background-color: #F0F0F0;
 }
 
 .bar-title {
