@@ -1,17 +1,3 @@
-var partials =  function() {
-  var fs = require('fs');
-  var partials = fs.readdirSync('./partials');
-
-  return partials.map(function(partial) {
-    var template = '<script type="text/ng-template" id="/partials/' + partial + '">';
-
-    template += fs.readFileSync('./partials/' + partial, 'utf-8');
-    template += '</script>';
-
-    return template;
-  }).join('');
-};
-
 module.exports = function(grunt) {
 
   grunt.initConfig({
@@ -24,7 +10,7 @@ module.exports = function(grunt) {
             expand: true,
             src: [
               'get/**',
-
+              'index.html',
               'apple-touch-icon-128x128.png',
               'apple-touch-icon.png',
               'favicon.ico',
@@ -98,7 +84,7 @@ module.exports = function(grunt) {
         options: {
           remove: 'script',
         },
-        src: 'index.html',
+        src: 'build/index.html',
         dest: 'build/index.html'
       },
       removecss: {
@@ -121,13 +107,19 @@ module.exports = function(grunt) {
         },
         src: 'build/index.html',
         dest: 'build/index.html'
-      },
-      appendpartials: {
+      }
+    },
+
+    inline_angular_templates: {
+      build: {
         options: {
-          append: { selector: 'body', html: partials() }
+          prefix: '/',
+          method: 'append'
         },
-        src: 'build/index.html',
-        dest: 'build/index.html'
+        files: {
+          'build/index.html' :  ['partials/*.html']
+        }
+
       }
     },
 
@@ -151,6 +143,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-ngmin');
+  grunt.loadNpmTasks('grunt-inline-angular-templates');
   grunt.loadNpmTasks('grunt-dom-munger');
 
   grunt.registerTask('default', [
@@ -165,7 +158,7 @@ module.exports = function(grunt) {
     'dom_munger:removecss',
     'dom_munger:appendscript',
     'dom_munger:appendcss',
-    'dom_munger:appendpartials',
+    'inline_angular_templates',
     'htmlmin'
   ]);
 };
