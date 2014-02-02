@@ -4,3 +4,4 @@ build/*
 nohup.out
 js/lib/*
 .DS_Store
+node_modules/*
