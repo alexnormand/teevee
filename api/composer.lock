@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "91b68680fa1fb7a48fe45bb20daa62f0",
+    "hash": "727f6157f3793102ff655ab4254e0c95",
     "packages": [
         {
             "name": "pimple/pimple",

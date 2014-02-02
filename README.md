@@ -10,20 +10,20 @@ An episode guide for television shows mobile web app (powered by Backbone.js & Z
     $ git clone https://github.com/alexnormand/teevee
     $ cd teevee
     $ bower i
-    $ cd get
+    $ cd api
     $ curl -sS https://getcomposer.org/installer | php
     $ php composer.phar install
     $ cd ..
     $ php -S localhost:3000
-    
-    
-    
+
+
+
 
 # Install (prod)
     $ git clone https://github.com/alexnormand/teevee
     $ cd teevee
     $ npm i && bower i
-    $ cd get
+    $ cd api
     $ curl -sS https://getcomposer.org/installer | php
     $ php composer.phar install
     $ cd ..

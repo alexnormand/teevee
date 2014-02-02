@@ -9,7 +9,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             src: [
-              'get/**',
+              'api/**',
               'index.html',
               'apple-touch-icon-128x128.png',
               'apple-touch-icon.png',

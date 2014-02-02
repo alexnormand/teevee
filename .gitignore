@@ -5,5 +5,5 @@ nohup.out
 js/lib/*
 .DS_Store
 node_modules/*
-get/vendor/*
+api/vendor/*
 composer.phar
