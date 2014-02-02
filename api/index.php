@@ -9,7 +9,7 @@ $app->get('/search/{query}', function ($query) use($app) {
     return $app['getJSON'](urlencode($app->escape($query)));
 });
 
-$app->get('/shows/{showid}/seasons/', function($showid) use($app) {
+$app->get('/shows/{showid}/seasons', function($showid) use($app) {
     return $app['getJSON']((int) $showid);
 })
 ->assert('showid', '\d+');
