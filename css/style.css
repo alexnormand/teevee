@@ -19,6 +19,14 @@ li:active {
   background-color: #F0F0F0;
 }
 
+p {
+  text-align: justify;
+}
+
+img {
+  width: 100%;
+}
+
 .bar-title {
   background-color: #C11;
   background-image: none;
