@@ -4,7 +4,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     clean: ['build'],
     copy: {
-      main: {
+      build: {
         files: [
           {
             expand: true,
@@ -18,11 +18,6 @@ module.exports = function(grunt) {
               'manifest.webapp'
             ],
             dest: 'build'
-          },
-          {
-            expand: false,
-            src: ['js/lib/angular/angular.min.js.map'],
-            dest: 'build/js/angular.min.js.map'
           }
         ]
       }
@@ -45,26 +40,22 @@ module.exports = function(grunt) {
       app: {
         src: ['js/app.js', 'js/controllers/*.js'],
         dest: 'build/js/app.js'
-      },
-      build: {
-        options: {
-          stripBanners: true
-        },
-        src: [
-          'js/lib/angular/angular.min.js',
-          'js/lib/angular-route/angular-route.min.js',
-          'js/lib/angular-touch/angular-touch.min.js',
-          'js/lib/angular-animate/angular-animate.min.js',
-          'build/js/app.js'
-        ],
-        dest: 'build/js/app.js'
       }
     },
 
     uglify: {
-      app: {
+      build: {
+        options: {
+          preserveComments: false
+        },
         files: {
-          'build/js/app.js': ['build/js/app.js']
+          'build/js/app.js': [
+            'js/lib/angular/angular.js',
+            'js/lib/angular-animate/angular-animate.js',
+            'js/lib/angular-route/angular-route.js',
+            'js/lib/angular-touch/angular-touch.js',
+            'build/js/app.js'
+          ]
         }
       }
     },
@@ -138,7 +129,7 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
@@ -152,8 +143,7 @@ module.exports = function(grunt) {
     'copy',
     'concat:app',
     'ngmin',
-    'uglify:app',
-    'concat:build',
+    'uglify',
     'cssmin',
     'dom_munger:removescripts',
     'dom_munger:removecss',
