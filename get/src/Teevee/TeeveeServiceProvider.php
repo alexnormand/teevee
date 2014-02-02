@@ -1,4 +1,4 @@
-<?Php
+<?php
 namespace Teevee;
 
 require_once __DIR__.'/parser.php';
@@ -16,6 +16,8 @@ class TeeveeServiceProvider implements ServiceProviderInterface {
         return $response;
     });
   }
+
+  public function boot(Application $app) {}
 }
 
 

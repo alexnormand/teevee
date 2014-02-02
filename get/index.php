@@ -1,11 +1,9 @@
 <?php
-require_once __DIR__ . '/vendors/silex.phar';
+require_once __DIR__ . '/vendor/autoload.php';
 
 $app = new Silex\Application();
 
-$app['autoloader']->registerNamespace('Teevee', __DIR__.'/src/');
 $app->register(new Teevee\TeeveeServiceProvider());
-
 
 $app->get('/search/{query}', function ($query) use($app) {
     return $app['getJSON'](urlencode($app->escape($query)));
