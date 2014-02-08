@@ -9,5 +9,5 @@
     "name": "Alex Normand",
     "url": "http://www.alexnormand.com"
   },
-  "installs_allowed_from": [*]
+  "installs_allowed_from": ["*"]
 }
