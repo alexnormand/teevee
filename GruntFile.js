@@ -18,6 +18,12 @@ module.exports = function(grunt) {
               'manifest.webapp'
             ],
             dest: 'build'
+          },
+          {
+            expand: true,
+            cwd: 'js/lib/ratchet/dist/ratchicons',
+            src: ['*'],
+            dest: 'build/css/ratchicons'
           }
         ]
       }
