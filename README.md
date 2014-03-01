@@ -1,4 +1,4 @@
-An episode guide for television shows mobile web app (powered by Backbone.js & Zepto.js)
+An episode guide for television shows mobile web app (powered by AngularJS & Silex)
 
 [http://teevee.norseman.li/](http://teevee.norseman.li/)
 
