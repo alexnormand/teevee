@@ -1,8 +1,7 @@
-<ul class="list">
-  <li ng-repeat="episode in episodes">
-    <a href="/shows/{{showId}}/seasons/{{seasonId}}/episodes/{{episode.id}}">
+<ul class="table-view">
+  <li  class="table-view-cell" ng-repeat="episode in episodes">
+    <a class="push-right" href="/shows/{{showId}}/seasons/{{seasonId}}/episodes/{{episode.id}}">
       {{ $index +1}}. {{ episode.title }}
     </a>
-    <span class="chevron"></span>
   </li>
 </ul>

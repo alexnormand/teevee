@@ -17,7 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "ratchet": "~1.0.2",
+    "ratchet": "2.0.0",
     "angular": "~1.2.10",
     "angular-route": "~1.2.10",
     "angular-touch": "~1.2.10",

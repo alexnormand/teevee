@@ -1,6 +1,5 @@
-<ul class="list">
-  <li ng-repeat="season in seasons">
-    <a href="/shows/{{ showId }}/seasons/{{ season }}/episodes">Season {{ season }}</a>
-    <span class="chevron"></span>
+<ul class="table-view">
+  <li class="table-view-cell" ng-repeat="season in seasons">
+    <a class="push-right" href="/shows/{{ showId }}/seasons/{{ season }}/episodes">Season {{ season }}</a>
   </li>
 </ul>
